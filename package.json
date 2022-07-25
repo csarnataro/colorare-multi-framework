@@ -6,7 +6,8 @@
   "scripts": {
     "clean": "rimraf \"packages/**/lib\" \"packages/**/*.tsbuildinfo\"",
     "compile": "tsc -b tsconfig.build.json",
-    "prepare": "npm run compile"
+    "prepare": "npm run compile",
+    "dev": "npm run dev --if-present -w @colorare/frontend-solidjs & npm run dev --if-present -w @colorare/backend"
   },
   "devDependencies": {
     "rimraf": "3.0.2",
