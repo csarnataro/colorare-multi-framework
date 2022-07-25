@@ -1,6 +1,8 @@
 {
   "name": "@colorare/app",
-  "private": true,
+  "description": "Test npm workspaces with 1 backend and multiple frontends",
+  "private": false,
+  "license": "MIT",
   "scripts": {
     "clean": "rimraf \"packages/**/lib\" \"packages/**/*.tsbuildinfo\"",
     "compile": "tsc -b tsconfig.build.json",
