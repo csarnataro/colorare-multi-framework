@@ -1,9 +1,6 @@
 import { BehaviorSubject } from 'rxjs';
 const initialState = {
-    items: [{
-            id: '1',
-            title: 'Chi sa',
-        }],
+    items: [],
 };
 const subject = new BehaviorSubject(initialState);
 let state = initialState;
@@ -15,7 +12,7 @@ const addItem = (item) => {
             ...state.items,
             {
                 id: Date.now().toString(),
-                title: `Added: '${item.title}'`,
+                title: `Added item: '${item.title}'`,
             }
         ]
     };
