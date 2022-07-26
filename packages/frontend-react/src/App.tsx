@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
 
-import { imageStore } from '@colorare/backend';
+import { facade } from '@colorare/backend';
 
 function App() {
 
-  const [store, setStore] = useState(imageStore.initialState);
+  const [store, setStore] = useState();
 
   useEffect(() => {
-    imageStore.subscribe(setStore)
+    facade.init()
   }, []);
 
   const addNewItem = () => {
-    imageStore.addItem({title: 'abc'});
+    facade.addItem({title: 'abc'});
   }
 
   return (
