@@ -1,3 +1,3 @@
-import { imageStore } from './image-store';
+import { facade } from './image-store';
 
-export { imageStore };
+export { facade };

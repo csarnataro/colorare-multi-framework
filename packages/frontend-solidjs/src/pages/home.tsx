@@ -1,25 +1,22 @@
 import { filter, fromEvent, map } from 'rxjs';
 import { useNavigate } from 'solid-app-router';
-import { Component, createSignal, onCleanup, onMount } from 'solid-js';
+import { Component, createSignal, For, onCleanup, onMount } from 'solid-js';
 import Logo from '../components/logo';
 import LadyBug from '../icons/lady-bug';
 import Magnifier from '../icons/magnifier';
-import { imageStore } from '@colorare/backend'
-
+import { facade } from '@colorare/backend'
 
 const Home: Component = () => {
   const [inputValue, setInputValue] = createSignal();
-  const [images, setImages] = createSignal();
+  const [history, setHistory] = createSignal<any[]>([]);
   const navigate = useNavigate();
 
+  onMount(() => {
+    facade.init();
+    facade.vm$.subscribe((vm) => setHistory(vm.history));
+  });
 
-  const addNewItem = () => {
-    imageStore.addItem({title: 'abc'});
-  }
-
-  onMount(() => 
-    imageStore.subscribe(setImages)
-  );
+  const addNewItem = (() => facade.addItem({title: 'oibo'}));
 
   const search = () => {
     navigate(`/search?q=${inputValue()}`)
@@ -66,11 +63,16 @@ const Home: Component = () => {
             </button>
           </div>
         </div>
-        <hr />
-        <pre>[{JSON.stringify(images(), null, 2)}]</pre>
-        <br />
-        <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={addNewItem}>Add</button>
+        <hr /><br />
+        <button type="submit" onClick={addNewItem}>Add</button>
 
+        <For each={history()}>{(entry) =>
+        <li>
+          <a target="_blank" href={`/search?q=${entry}`}>
+            {entry}
+          </a>
+        </li>
+      }</For>
       </div>
     </>
   );
