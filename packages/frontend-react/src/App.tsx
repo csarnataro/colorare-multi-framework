@@ -12,7 +12,7 @@ function App() {
   }, []);
 
   const addNewItem = () => {
-    facade.addItem({title: 'abc'});
+    // facade.addItem({title: 'abc'});
   }
 
   return (

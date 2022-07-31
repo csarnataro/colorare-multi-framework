@@ -2,7 +2,7 @@
   "name": "@colorare/backend",
   "version": "1.0.0",
   "description": "",
-  "main": "lib/index.js",
+  "module": "lib/index.js",
   "scripts": {
     "compile": "tsc",
     "dev": "tsc-watch"
