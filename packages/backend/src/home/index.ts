@@ -1,0 +1,1 @@
+export { facade as homeFacade } from './home-facade';

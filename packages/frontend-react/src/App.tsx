@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
 
-import { facade } from '@colorare/backend';
+import { homeFacade } from '@colorare/backend';
 
 function App() {
 
   const [store, setStore] = useState();
 
   useEffect(() => {
-    facade.init()
+    homeFacade.init()
   }, []);
 
   const addNewItem = () => {

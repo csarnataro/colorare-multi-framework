@@ -1,5 +1,4 @@
-import { facade, ItemState } from '@colorare/backend';
-import { filter, fromEvent, map } from 'rxjs';
+import { homeFacade } from '@colorare/backend';
 import { useNavigate } from 'solid-app-router';
 import { Component, createEffect, createSignal, For, onCleanup, onMount } from 'solid-js';
 import Logo from '../components/logo';
@@ -9,12 +8,12 @@ import Magnifier from '../icons/magnifier';
 
 const Home: Component = () => {
   const [inputValue, setInputValue] = createSignal<string>('');
-  const [vm, setVm] = createSignal<ItemState>()
+  const [history, setHistory] = createSignal<string[]>()
   const navigate = useNavigate();
 
   onMount(() => {
-    facade.init();
-    facade.vm$.subscribe((vm: ItemState) => setVm(vm));
+    homeFacade.init();
+    homeFacade.history$.subscribe((history: string[]) => setHistory(history));
   });
 
   const search = () => {
@@ -44,15 +43,14 @@ const Home: Component = () => {
           </div>
         </div>
         <hr /><br />
-        <For each={vm()?.history}>{(entry: string) =>
+        <For each={history()}>{(entry: string) =>
         <li>
-          <a target="_blank" href={`/search?q=${entry}`}>
+          <a href={`/search?q=${entry}`}>
             {entry}
           </a>
         </li>
       }</For>
       </div>
-      <pre>{JSON.stringify(vm(), null, 2)}</pre>
     </>
   );
 };
