@@ -7,7 +7,7 @@ export default ({ additionalCssClass = '', size = 8, font = 'base'}: LogoProps) 
 
     const sizeCssClasses = `h-${size}`;
     return (
-        <h1 class={`block text-${font} mb-8 tracking-wide font-bold ${sizeCssClasses} ${additionalCssClass}`} style="text-shadow: #A3A3A3 1px 1px 1px">
+        <h1 class={`block text-${font} tracking-wide mb-4 font-bold ${sizeCssClasses} ${additionalCssClass}`} style="text-shadow: #A3A3A3 1px 1px 1px">
             <span style="color:#ff4747;">C</span>
             <span style="color:#ffd147;">O</span>
             <span style="color:#a3ff47;">L</span>
