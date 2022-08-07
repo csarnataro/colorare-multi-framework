@@ -1,3 +1,3 @@
-import { facade } from './single-result-facade';
+import SingleResultViewModel from './SingleResultViewModel';
 
-export { facade as singleResultFacade };
+export { SingleResultViewModel };

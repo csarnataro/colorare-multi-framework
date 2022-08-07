@@ -5,10 +5,7 @@ import 'windi.css';
 
 import { Route, Router, Routes } from 'solid-app-router';
 import Home from './pages/home';
-import SingleResult from './pages/single-result';
 import Results from './pages/results';
-import * as db from './db';
-import { Image } from "@colorare/backend";
 
 //Data function
 // async function ImageData({ params, location, navigate, data }): Promise<Image> {
@@ -29,7 +26,6 @@ render(() =>
         <Routes>
           <Route path="/" element={<Home />} />;
           <Route path="/search" element={<Results />} />;
-          <Route path="/image" element={<SingleResult />} />;
           <Route path="*" element={() => <div>Page not found</div>} />
         </Routes>
       </Router>
