@@ -25,15 +25,21 @@ export type Image = {
   title: string;
   media: URL;
   thumbnail: URL;
-  media_preview: URL;
+  thumb_width: number;
+  thumb_height: number;
+  width: number;
+  height: number;
+  domain?: string;
 }
 
 export type ResultsState = {
   items: Image[];
   history: string[];
   loading: boolean;
-  query?: string;
+  query: string;
   errorMessage?: string;
+  selectedImage?: Image;
+  selectedImageId?: string;
 }
 
 export type ResultsFacade = {

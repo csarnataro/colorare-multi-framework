@@ -1,14 +1,16 @@
 import { homeFacade } from './home';
 import { resultFacade } from './search-results';
-import { singleResultFacade } from './single-result'
+import { SearchResultsViewModel } from './search-results'
+import { SingleResultViewModel } from './single-result'
 import { HomeState, Image, ResultsState, ResultsFacade } from './types';
 
 export {
   homeFacade,
   resultFacade,
-  singleResultFacade,
+  SearchResultsViewModel,
+  SingleResultViewModel,
   HomeState,
   Image,
-  ResultsState as ItemState,
-  ResultsFacade as ResultFacade,
+  ResultsState,
+  ResultsFacade,
 };
