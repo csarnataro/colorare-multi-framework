@@ -1,12 +1,10 @@
 import {
   BehaviorSubject,
-  debounceTime,
   distinctUntilChanged,
   filter,
   map,
   Observable,
   switchMap,
-  tap
 } from 'rxjs';
 import { Image, ResultsState } from '../types';
 import { fetchImages } from './image-fetcher';

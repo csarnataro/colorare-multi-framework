@@ -1,6 +1,6 @@
 import { homeFacade } from '@colorare/backend';
 import { useNavigate } from 'solid-app-router';
-import { Component, createEffect, createSignal, For, onCleanup, onMount } from 'solid-js';
+import { Component, createSignal, For, onMount } from 'solid-js';
 import Logo from '../components/logo';
 import SearchBox from '../components/search-box';
 import LadyBug from '../icons/lady-bug';
@@ -33,23 +33,25 @@ const Home: Component = () => {
             <SearchBox search={search} setInputValue={setInputValue} home />
           </div>
           <div class="flex flex-row mt-4">
-            <button role="button" class="hover:bg-pink-100 hover:border-red-200 bg-gray-100 py-2 px-6 mr-4 border-1 rounded" onClick={search}>
+            <button class="hover:bg-pink-100 hover:border-red-200 bg-gray-100 py-2 px-6 mr-4 border-1 rounded" onClick={search}>
               <Magnifier additionalCssClass="-mt-1 mr-2" />
               Cerca</button>
-            <button role="button" class="hover:bg-pink-100 hover:border-red-200 bg-gray-100 py-2 px-6 border-1 rounded">
+            <button class="hover:bg-pink-100 hover:border-red-200 bg-gray-100 py-2 px-6 border-1 rounded">
               <LadyBug additionalCssClass="mr-2" />
               Mi sento fortunato
             </button>
           </div>
         </div>
         <hr /><br />
-        <For each={history()}>{(entry: string) =>
-        <li>
-          <a href={`/search?q=${entry}`}>
-            {entry}
-          </a>
-        </li>
-      }</For>
+        <ul>
+          <For each={history()}>{(entry: string) =>
+            <li>
+              <a href={`/search?q=${entry}`}>
+                {entry}
+              </a>
+            </li>
+          }</For>
+        </ul>
       </div>
     </>
   );
