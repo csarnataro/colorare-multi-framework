@@ -1,5 +1,5 @@
+import { Image } from '@colorare/backend';
 import { get, set } from 'idb-keyval';
-import { Image } from '../types/image';
 
 function storeImage(id: string, json: Image): void {
   set(id, json);
@@ -14,7 +14,7 @@ function cache(imageFetcher: (query: string) => Promise<any>) {
     const results: Image[] = await imageFetcher(query);
     for(let i = 0; i < results.length; i++) {
       const result = results[i];
-      storeImage(result._id, result);
+      storeImage(result.id, result);
     }
     return results;
   }

@@ -3,5 +3,6 @@
   "references": [
     { "path": "packages/backend" }, 
     { "path": "packages/frontend-react" }, 
+    { "path": "packages/frontend-solidjs" }, 
   ]
 }
