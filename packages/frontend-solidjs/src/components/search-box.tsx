@@ -1,5 +1,5 @@
 import { filter, fromEvent, map } from "rxjs";
-import { Component, createEffect, onCleanup } from "solid-js";
+import { Component, onCleanup } from "solid-js";
 import Magnifier from "../icons/magnifier";
 
 type SearchBoxProps = {

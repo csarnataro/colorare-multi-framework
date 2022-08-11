@@ -5,6 +5,7 @@ import {
   map,
   Observable,
   switchMap,
+  tap,
 } from 'rxjs';
 import { Image, ResultsState } from '../types';
 import { fetchImages } from './image-fetcher';
@@ -12,7 +13,7 @@ import { updateHistory } from './update-history';
 
 
 class SearchResultsViewModel {
-  private initialState: ResultsState = {
+  initialState: ResultsState = {
     items: [],
     query: '',
     loading: false,
@@ -39,6 +40,11 @@ class SearchResultsViewModel {
   );
   
   query$: Observable<string> = this.state$.pipe(
+    tap(q => {
+      console.dir('******** BEGIN: SearchResultsViewModel:45 ********');
+      console.dir(q, { depth: null, colors: true });
+      console.dir('********   END: SearchResultsViewModel:45 ********');
+    }),
     map((state) => state.query),
     distinctUntilChanged()
   );
@@ -65,9 +71,6 @@ class SearchResultsViewModel {
         switchMap((query: string) => fetchImages(query!))
       )
       .subscribe((items: Image[]) => {
-        console.dir('******** BEGIN: SearchResultsViewModel:66 ********');
-        console.dir(this.state.query, { depth: null, colors: true });
-        console.dir('********   END: SearchResultsViewModel:66 ********');
         this.updateState({
           ...this.state,
           items,

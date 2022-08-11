@@ -19,7 +19,6 @@ const Home: Component = () => {
   const search = () => {
     const query = inputValue();
     if (query) {
-      // facade.updateQuery(query);
       navigate(`/search?q=${inputValue()}`)
     }
   }
