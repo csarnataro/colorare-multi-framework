@@ -27,6 +27,7 @@ export type Image = {
   thumbnail: URL;
   thumb_width: number;
   thumb_height: number;
+  media_preview: URL;
   width: number;
   height: number;
   domain?: string;

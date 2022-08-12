@@ -1,3 +1,5 @@
+import { Observable, of } from "rxjs";
+
 export const KEY = 'history';
 const HISTORY_SIZE = 5;
 
@@ -19,13 +21,14 @@ const HISTORY_SIZE = 5;
  * @param query 
  */
 
-function updateHistory(query: string): void {
+function updateHistory(query: string): string[] | undefined {
   if (!query) return;
   const existingHistory= JSON.parse(window.localStorage.getItem(KEY) || '[]') as string[];
-  const newItem = getUpdatedHistory(query.toLowerCase(), existingHistory);
-  if (newItem) {
-    window.localStorage.setItem(KEY, JSON.stringify(newItem));
+  const newHistory = getUpdatedHistory(query.toLowerCase(), existingHistory);
+  if (newHistory) {
+    window.localStorage.setItem(KEY, JSON.stringify(newHistory));
   }
+  return newHistory;
 }
 
 function getUpdatedHistory(query: string, historyArray: string[]): string[] {

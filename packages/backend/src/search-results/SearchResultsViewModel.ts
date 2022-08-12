@@ -1,5 +1,6 @@
 import {
   BehaviorSubject,
+  combineLatest,
   distinctUntilChanged,
   filter,
   map,
@@ -40,13 +41,13 @@ class SearchResultsViewModel {
   );
   
   query$: Observable<string> = this.state$.pipe(
-    tap(q => {
-      console.dir('******** BEGIN: SearchResultsViewModel:45 ********');
-      console.dir(q, { depth: null, colors: true });
-      console.dir('********   END: SearchResultsViewModel:45 ********');
-    }),
     map((state) => state.query),
-    distinctUntilChanged()
+    distinctUntilChanged(),
+    tap(q => {
+      console.log('******** BEGIN: SearchResultsViewModel:45 ********');
+      console.log(q);
+      console.log('********   END: SearchResultsViewModel:45 ********');
+    }),
   );
 
   selectedImage$: Observable<Image> = this.state$.pipe(
@@ -59,6 +60,18 @@ class SearchResultsViewModel {
     distinctUntilChanged(),
   );
   
+  data$: Observable<any> = combineLatest([
+    this.history$,
+    this.items$,
+    this.query$,
+  ]
+  ).pipe(
+    map(([history, items, query]) => {
+      return { query, items: items.length, history };
+    })
+  );  
+
+
   constructor() {
     this.initializeResultsStream();
     this.initializeQueryStream();
@@ -68,7 +81,10 @@ class SearchResultsViewModel {
     this.query$
       .pipe(
         distinctUntilChanged(),
-        switchMap((query: string) => fetchImages(query!))
+        switchMap((query: string) => fetchImages(query!)),
+        tap(i => {
+          console.dir(i);
+        })
       )
       .subscribe((items: Image[]) => {
         this.updateState({
@@ -84,8 +100,15 @@ class SearchResultsViewModel {
     this.query$.pipe(
       filter((query) => !!query),
       distinctUntilChanged(),
-    ).subscribe((query: string) => updateHistory(query!))
-  
+    ).subscribe((query: string) => {
+      const updatedHistory = updateHistory(query!);
+      if (updatedHistory) {
+        this.updateState({
+          ...this.state,
+          history: updatedHistory
+        });
+      }
+    });
   }
 
   deselectImage() {
@@ -101,7 +124,8 @@ class SearchResultsViewModel {
   } 
 
   updateQuery(query: string) {
-    this.updateState({ ...this.state, query, items: [], selectedImage: undefined });
+    console.log(`**** updating query ${query}`);
+    this.updateState({ ...this.state, query });
   }
   
   private updateState(state: ResultsState) { 

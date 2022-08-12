@@ -25,6 +25,7 @@ const convertItem = (item: ResultItem): Image => {
     title: item.title,
     media: new URL(item.media_fullsize),
     thumbnail: new URL(item.thumbnail),
+    media_preview: new URL(item.media_preview),
     thumb_width: item.thumb_width,
     thumb_height: item.thumb_height,
     width: item.width,
