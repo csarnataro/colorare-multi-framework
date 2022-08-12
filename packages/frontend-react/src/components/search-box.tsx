@@ -6,7 +6,7 @@ type SearchBoxProps = {
   search: any;
   setInputValue: any;
   home?: boolean;
-  value?: string
+  value?: string; // aka inputValue
 };
 
 const SearchBox = (props: SearchBoxProps) => {
@@ -54,8 +54,9 @@ const SearchBox = (props: SearchBoxProps) => {
           </button>
         </span>
         <input
-          id='default-search'
+          id="default-search"
           type="search"
+          ref={inputRef}
           className="py-2 pr-2 text-xl w-96 h-12 text-gray-900 border rounded-md pl-10"
           placeholder="Cerca..."
           autoComplete="off"
@@ -76,7 +77,7 @@ const SearchBox = (props: SearchBoxProps) => {
               type="text" 
               placeholder="Cerca..."
               autoComplete="off"
-              onChange={(e) => setInputValue(e.currentTarget.value)}
+              onInput={(e) => setInputValue(e.currentTarget.value)}
               value={value}
             />
             <button 

@@ -1,18 +1,68 @@
-import { useEffect, useState } from 'react';
+import { Image, ResultsState, SearchResultsViewModel } from '@colorare/backend';
+import { useEffect, useState, CSSProperties } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { Observable, Subscription } from 'rxjs';
 import Logo from '../components/logo';
 import SearchBox from '../components/search-box';
 import SelectedImagePanel from '../components/selected-image-panel';
-import useResultsFacade from '../hooks/useResultsFacade';
+// import useResultsFacade from '../hooks/useResultsFacade';
+
+const debugStyle: CSSProperties = { 
+  position: 'fixed', 
+  left: 0, 
+  top: 0, 
+  width: 400, 
+  height: 400, 
+  backgroundColor: 'rgba(0, 0, 0, 0.7)' ,
+  fontSize: 'smaller', 
+  color: 'white',
+  fontFamily: 'monospace',
+}
 
 const Results = () => {
   // const viewModel = useViewModel();
-  const {state, updateQuery, deselectImage, selectImageById } = useResultsFacade();
-  const {items, selectedImage, query, errorMessage} = state;
+  // const {state, updateQuery, deselectImage, selectImageById } = useResultsFacade();
+  // const {items, selectedImage, query, errorMessage} = state;
 
+  const viewModel = new SearchResultsViewModel();
+  // const [state, setState] = useState<ResultsState>(viewModel.initialState);
   const [inputValue, setInputValue] = useState<string>('')
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
+
+  const [items, setItems] = useState<Image[]>()
+  const [selectedImage, setSelectedImage] = useState<Image>()
+  const [errorMessage, setErrorMessage] = useState<string>()
+  const [query, setQuery] = useState<string>()
+
+
+  function subscribeTo<T>(source$: Observable<T>, nextFn: (value: T) => void): Subscription {
+    return source$.subscribe({ next: nextFn, error: console.error });
+  }
+
+  const updateQuery = (q: string) => viewModel.updateQuery(q)
+  const deselectImage = () => viewModel.deselectImage();
+  const selectImageById = (id: string) => viewModel.selectImageById(id);
+
+  const initSubscriptions = (): Subscription[] => (
+    [
+      // subscribeTo(viewModel.items$, () => setState(state => ({ ...state }))),
+      // subscribeTo(viewModel.errorMessage$, () => setState(state => ({ ...state }))),
+      // subscribeTo(viewModel.query$, () => setState((state) => ({ ...state }))),
+      // subscribeTo(viewModel.selectedImage$, () => setState((state) => ({ ...state }))),
+    ])
+
+  useEffect(() => {
+    // const subs = initSubscriptions();
+    viewModel.items$.subscribe((items: Image[]) => setItems(items));
+    viewModel.errorMessage$.subscribe((errorMsg: string | undefined) => setErrorMessage(errorMsg));
+    viewModel.query$.subscribe((query: string | undefined) => setQuery(query));
+    viewModel.selectedImage$.subscribe((image) => setSelectedImage(image));
+
+    // return () => { subs.forEach(it => it.unsubscribe()) };
+  }, []);
+
+
 
   const search = (q: string) => {
     if (q) {
@@ -35,6 +85,7 @@ const Results = () => {
 
   return (
     <>
+      <pre style={debugStyle}>{JSON.stringify({query, items: items?.length}, null, 2)}</pre>
       <div className="container mx-auto p-6 pb-0">
         <div className="flex flex-row items-center mb-8">
           <Link to="/">

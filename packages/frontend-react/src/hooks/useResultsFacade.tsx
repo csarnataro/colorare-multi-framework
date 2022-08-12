@@ -24,7 +24,7 @@ export default function useResultsFacade(): ResultsFacade {
 
   useEffect(() => {
     const subs = initSubscriptions();
-    return () => { subs.forEach(it => it.unsubscribe()) };
+    // return () => { subs.forEach(it => it.unsubscribe()) };
   }, []);
 
   return {
